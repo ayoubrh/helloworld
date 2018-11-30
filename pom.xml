@@ -16,8 +16,8 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <profile.name>sonarCap</profile.name>
-                <sonar.login>72d5aeb3c9cd4731d9792af393278223784a150b</sonar.login>
+                <profile.name>sonar</profile.name>
+                <sonar.login>9c0be40c6aeb62bc3110070f0f21c43ab1e605d7</sonar.login>
 				<sonar.host.url>http://localhost:9000/</sonar.host.url>
             </properties>
         </profile>
