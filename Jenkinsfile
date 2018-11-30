@@ -33,7 +33,7 @@ node {
            sleep 300
 	    }
          stage('Start Tomcat containter') {
-	       bat "docker run --name tomcat -p 8080:8080 -v C:\Users\ayoub\workspace_Demo\Data:/opt/bitnami/tomcat/logs --link postgresql:postgresqlalias bitnami/tomcat:8.5.35"
+	       bat "docker run --name tomcat -p 8080:8080 -v C:/Users/ayoub/workspace_Demo/Data:/opt/bitnami/tomcat/logs --link postgresql:postgresqlalias bitnami/tomcat:8.5.35"
            sleep 300
 	    }
         stage('Deploy War') {
