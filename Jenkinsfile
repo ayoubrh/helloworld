@@ -11,14 +11,14 @@ node {
             }
         }
         stage('Build') {
-            maven(maven: 'M3', mavenOpts: '') {
+            maven(maven: 'M3', mavenOpts: '-Xmx1024M -XX:+TieredCompilation -XX:TieredStopAtLevel=1') {
 	           
                 sh "mvn clean install -DskipTests"
             }
             archiveArtifacts artifacts: '**/helloworldrest/target/helloworld.war'
         }
 	    stage('SonarQube analysis') {
-	       maven(maven: 'M3', mavenOpts: '') {
+	       maven(maven: 'M3', mavenOpts: '-Xmx1024M -XX:-UseGCOverheadLimit') {
 	            sh "mvn sonar:sonar -Dsonargraph.prepareForSonar=true"
 	       }
 	    }
