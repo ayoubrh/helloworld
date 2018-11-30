@@ -28,17 +28,17 @@ node {
            bat "docker stop tomcat"
            bat "docker rm tomcat"
 	    }
-        stage('Start POSTGRESQL containter') {
+        stage('Start POSTGRESQL container') {
 	       bat "docker run --name postgresql -e POSTGRESQL_USERNAME=demo -e POSTGRESQL_PASSWORD=password -e POSTGRESQL_DATABASE=DEMO -p 5432:5432 -d bitnami/postgresql:latest"
            sleep 60
 	    }
-         stage('Start Tomcat containter') {
+         stage('Start Tomcat container') {
 	       bat "docker run --name tomcat -p 8080:8080 -v C:/Users/ayoub/workspace_Demo/Data:/opt/bitnami/tomcat/logs --link postgresql:postgresqlalias -d bitnami/tomcat:8.5.35"
-           sleep 30
+           sleep 60
 	    }
         stage('Deploy War') {
 	       bat "docker cp helloworldrest/target/helloworld.war tomcat:/app"
-           sleep 10
+           sleep 60
 	    }
         if (params.DEPLOY_DEV) {
             stage('Deploy DEV') {
@@ -83,7 +83,7 @@ node {
 	            ])
 	        }
         }
-        if (params.IT == null || params.IT) {
+        if (params.IT) {
 	        stage('Integrations-Tests') {
 	            withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
 	            
