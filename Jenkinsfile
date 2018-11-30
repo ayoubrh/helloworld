@@ -13,13 +13,13 @@ node {
         stage('Build') {
             withMaven(maven: 'M3', mavenOpts: '-Xmx1024M -XX:+TieredCompilation -XX:TieredStopAtLevel=1') {
 	           
-                sh "mvn clean install -DskipTests"
+                bat "mvn clean install -DskipTests"
             }
             archiveArtifacts artifacts: '**/helloworldrest/target/helloworld.war'
         }
 	    stage('SonarQube analysis') {
 	       withMaven(maven: 'M3', mavenOpts: '-Xmx1024M -XX:-UseGCOverheadLimit') {
-	            sh "mvn sonar:sonar -Dsonargraph.prepareForSonar=true"
+	            bat "mvn sonar:sonar -Dsonargraph.prepareForSonar=true"
 	       }
 	    }
         if (params.DEPLOY_DEV) {
@@ -57,7 +57,7 @@ node {
         if (params.UT == null || params.UT) {
 	        stage('Unit-Tests') {
 	            withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
-	                sh "mvn org.jacoco:jacoco-maven-plugin:prepare-agent surefire:test"
+	                bat "mvn org.jacoco:jacoco-maven-plugin:prepare-agent surefire:test"
 	            }
 	            step([
 	                    $class     : 'JUnitResultArchiver',
@@ -73,7 +73,7 @@ node {
 				    if(params.ORANGE){
 				       	proxyOrange="-DproxySet=true -DproxyHost=proxy.rd.francetelecom.fr -DproxyPort=3128"
 				    }
-	                sh "mvn org.jacoco:jacoco-maven-plugin:prepare-agent surefire:test -Dtest=*IT test -DfailIfNoTests=false"
+	                bat "mvn org.jacoco:jacoco-maven-plugin:prepare-agent surefire:test -Dtest=*IT test -DfailIfNoTests=false"
 	            }
 	            step([
 	                    $class     : 'JUnitResultArchiver',
