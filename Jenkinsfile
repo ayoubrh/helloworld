@@ -11,23 +11,17 @@ node {
             }
         }
         stage('Build') {
-            withMaven(maven: 'M3', mavenOpts: '') {
+            maven(maven: 'M3', mavenOpts: '') {
 	           
                 sh "mvn clean install -DskipTests"
             }
-            archiveArtifacts artifacts: '**/helloworldrest/target/*.tar'
+            archiveArtifacts artifacts: '**/helloworldrest/target/helloworld.war'
         }
-        if (params.SONAR == null || params.SONAR) {
-	        stage('SonarQube analysis') {
-	            withMaven(maven: 'M3', mavenOpts: '-Xmx1024M -XX:-UseGCOverheadLimit') {
-	            def sonarProfile="-PsonarCap"
-			    if(params.ORANGE){
-			       	sonarProfile="-PsonarOrange"
-			    }
-	                sh "mvn sonar:sonar ${sonarProfile} -Dsonargraph.prepareForSonar=true"
-	            }
-	        }
-        }
+	    stage('SonarQube analysis') {
+	       maven(maven: 'M3', mavenOpts: '') {
+	            sh "mvn sonar:sonar -Dsonargraph.prepareForSonar=true"
+	       }
+	    }
         if (params.DEPLOY_DEV) {
             stage('Deploy DEV') {
                 withEnv(["PATH+ANSIBLE=${tool 'Ansible 2.3.1.0'}"]) {
@@ -62,7 +56,7 @@ node {
         
         if (params.UT == null || params.UT) {
 	        stage('Unit-Tests') {
-	            withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
+	            maven(maven: 'M3', mavenOpts: '-Xmx1024M') {
 	                sh "mvn org.jacoco:jacoco-maven-plugin:prepare-agent surefire:test"
 	            }
 	            step([
@@ -73,7 +67,7 @@ node {
         }
         if (params.IT == null || params.IT) {
 	        stage('Integrations-Tests') {
-	            withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
+	            maven(maven: 'M3', mavenOpts: '-Xmx1024M') {
 	            
 	            	def proxyOrange=""
 				    if(params.ORANGE){
