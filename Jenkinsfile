@@ -11,14 +11,14 @@ node {
             }
         }
         stage('Build') {
-            maven(maven: 'M3', mavenOpts: '-Xmx1024M -XX:+TieredCompilation -XX:TieredStopAtLevel=1') {
+            withMaven(maven: 'M3', mavenOpts: '-Xmx1024M -XX:+TieredCompilation -XX:TieredStopAtLevel=1') {
 	           
                 sh "mvn clean install -DskipTests"
             }
             archiveArtifacts artifacts: '**/helloworldrest/target/helloworld.war'
         }
 	    stage('SonarQube analysis') {
-	       maven(maven: 'M3', mavenOpts: '-Xmx1024M -XX:-UseGCOverheadLimit') {
+	       withMaven(maven: 'M3', mavenOpts: '-Xmx1024M -XX:-UseGCOverheadLimit') {
 	            sh "mvn sonar:sonar -Dsonargraph.prepareForSonar=true"
 	       }
 	    }
@@ -56,7 +56,7 @@ node {
         
         if (params.UT == null || params.UT) {
 	        stage('Unit-Tests') {
-	            maven(maven: 'M3', mavenOpts: '-Xmx1024M') {
+	            withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
 	                sh "mvn org.jacoco:jacoco-maven-plugin:prepare-agent surefire:test"
 	            }
 	            step([
@@ -67,7 +67,7 @@ node {
         }
         if (params.IT == null || params.IT) {
 	        stage('Integrations-Tests') {
-	            maven(maven: 'M3', mavenOpts: '-Xmx1024M') {
+	            withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
 	            
 	            	def proxyOrange=""
 				    if(params.ORANGE){
