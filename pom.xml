@@ -8,4 +8,19 @@
   	<module>helloworldweb</module>
   	<module>helloworldrest</module>
   </modules>
+  
+  <profiles>
+        <profile>
+            <id>sonarCap</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profile.name>sonarCap</profile.name>
+                <sonar.login>72d5aeb3c9cd4731d9792af393278223784a150b</sonar.login>
+				<sonar.host.url>http://localhost:9000/</sonar.host.url>
+            </properties>
+        </profile>
+        
+    </profiles>
 </project>

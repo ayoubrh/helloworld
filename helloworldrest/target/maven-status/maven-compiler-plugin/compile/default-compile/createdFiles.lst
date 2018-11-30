@@ -1,0 +1,5 @@
+com\kreatik\fr\Application.class
+com\kreatik\fr\MyConfiguration$1.class
+com\kreatik\fr\MyConfiguration.class
+com\kreatik\fr\repositories\HelloWolrdRepository.class
+com\kreatik\fr\model\HelloWorld.class
