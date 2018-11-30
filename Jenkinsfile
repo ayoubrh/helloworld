@@ -1,6 +1,11 @@
 #!groovy
 node {
     try {
+
+        tools {
+            maven 'M3'
+            jdk 'JAVA8'
+        }
         stage('Checkout') {
             retry(3) {
                 checkout scm
@@ -11,11 +16,14 @@ node {
             }
         }
         stage('Build') {
-            withMaven(maven: 'M3', mavenOpts: '-Xmx1024M -XX:+TieredCompilation -XX:TieredStopAtLevel=1') {
-	           
-                bat "mvn clean install -DskipTests"
+            steps {
+                bat "mvn clean install -DskipTests"' 
             }
-            archiveArtifacts artifacts: '**/helloworldrest/target/helloworld.war'
+            post {
+                success {
+                    archiveArtifacts artifacts: '**/helloworldrest/target/helloworld.war' 
+                }
+            }
         }
 	    stage('SonarQube analysis') {
 	       withMaven(maven: 'M3', mavenOpts: '-Xmx1024M -XX:-UseGCOverheadLimit') {
