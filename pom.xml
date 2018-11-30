@@ -19,7 +19,6 @@
                 <profile.name>sonar</profile.name>
                 <sonar.login>9c0be40c6aeb62bc3110070f0f21c43ab1e605d7</sonar.login>
 				<sonar.host.url>http://localhost:9000/</sonar.host.url>
-				<sonar.sources>src/main/java,src</sonar.sources>
             </properties>
         </profile>
         

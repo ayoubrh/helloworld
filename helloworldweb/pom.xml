@@ -4,7 +4,9 @@
   <artifactId>helloworldweb</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  
+  <properties>
+  	<sonar.sources>src</sonar.sources>
+  </properties>
   
 	<build>
 	
