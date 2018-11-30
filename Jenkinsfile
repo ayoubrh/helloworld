@@ -30,15 +30,15 @@ node {
 	    }
         stage('Start POSTGRESQL containter') {
 	       bat "docker run --name postgresql -e POSTGRESQL_USERNAME=demo -e POSTGRESQL_PASSWORD=password -e POSTGRESQL_DATABASE=DEMO -p 5432:5432 -d bitnami/postgresql:latest"
-           sleep 100
+           sleep 60
 	    }
          stage('Start Tomcat containter') {
 	       bat "docker run --name tomcat -p 8080:8080 -v C:/Users/ayoub/workspace_Demo/Data:/opt/bitnami/tomcat/logs --link postgresql:postgresqlalias -d bitnami/tomcat:8.5.35"
-           sleep 80
+           sleep 30
 	    }
         stage('Deploy War') {
-	       bat "docker cp **/helloworldrest/target/helloworld.war tomcat:/app"
-           sleep 20
+	       bat "docker cp helloworldrest/target/helloworld.war tomcat:/app"
+           sleep 10
 	    }
         if (params.DEPLOY_DEV) {
             stage('Deploy DEV') {
