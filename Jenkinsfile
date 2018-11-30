@@ -22,6 +22,23 @@ node {
 	            bat "mvn sonar:sonar -Dsonargraph.prepareForSonar=true"
 	       }
 	    }
+        stage('Stop Old Envs') {
+	       bat "docker stop postgresql"
+           bat "docker rm postgresql"
+           bat "docker stop tomcat"
+           bat "docker rm tomcat"
+	    }
+        stage('Start POSTGRESQL containter') {
+	       bat "docker run --name postgresql -e POSTGRESQL_USERNAME=demo -e POSTGRESQL_PASSWORD=password -e POSTGRESQL_DATABASE=DEMO -p 5432:5432 -d bitnami/postgresql:latest"
+           sleep 300
+	    }
+         stage('Start Tomcat containter') {
+	       bat "docker run --name tomcat -p 8080:8080 -v C:\Users\ayoub\workspace_Demo\Data:/opt/bitnami/tomcat/logs --link postgresql:postgresqlalias bitnami/tomcat:8.5.35"
+           sleep 300
+	    }
+        stage('Deploy War') {
+	       bat "docker cp **/helloworldrest/target/helloworld.war tomcat:/app"
+	    }
         if (params.DEPLOY_DEV) {
             stage('Deploy DEV') {
                 withEnv(["PATH+ANSIBLE=${tool 'Ansible 2.3.1.0'}"]) {
@@ -54,7 +71,7 @@ node {
             }
         }
         
-        if (params.UT == null || params.UT) {
+        if (params.UT) {
 	        stage('Unit-Tests') {
 	            withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
 	                bat "mvn org.jacoco:jacoco-maven-plugin:prepare-agent surefire:test"
