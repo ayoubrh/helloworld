@@ -5,7 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <properties>
-  	<sonar.sources>src</sonar.sources>
+  	<sonar.sources>src/app</sonar.sources>
   </properties>
   
 	<build>
