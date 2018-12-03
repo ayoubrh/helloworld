@@ -52,7 +52,7 @@
                 <tr *ngFor="let msg of msgs">
 <!--                   <td>{{msg.id}}</td>
  -->                  <td width="33%">{{msg.message}}</td>
-                  <td width="34%">{{msg.startDate | date:'medium'}}</td>
+                  <td width="34%" id="{{msg.startDate}}">{{msg.startDate | date}}</td>
                 </tr>
               </tbody>
             </table>      
