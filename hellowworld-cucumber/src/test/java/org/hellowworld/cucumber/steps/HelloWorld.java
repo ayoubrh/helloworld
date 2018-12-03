@@ -48,9 +48,9 @@ public class HelloWorld {
 	
 	@When("^Click sur le bouton envoyer$")
     public void click() throws Throwable {
-		driver.findElement(By.cssSelector("button.btn.btn-default")).click();
 		this.dateCreation = LocalDateTime.now();
-		System.out.println("dateCreation : "+dateCreation);
+		driver.findElement(By.cssSelector("button.btn.btn-default")).click();
+		TimeUnit.SECONDS.sleep(10);
     }
     
 
@@ -59,27 +59,16 @@ public class HelloWorld {
     	
     	List<WebElement> rows = driver.findElements(By.cssSelector("tbody > tr"));
     	
-    	System.out.println("ROWS : "+rows.size());
     	String msgR = rows.get(rows.size()-1).findElement(By.cssSelector("td:nth-of-type(1)")).getText();
-    	System.out.println("msgR : "+msgR);
     	String dateR = rows.get(rows.size()-1).findElement(By.cssSelector("td:nth-of-type(2)")).getAttribute("id");
-    	System.out.println("dateR : "+dateR);
-    	//DateTimeFormatter df = DateTimeFormatter.ofPattern("MMM dd, yyyy, HH:mm:ss a");
 
-//    	Instant instant = Instant.parse(dateR);
-//
-//        System.out.println(instant);
-
-        //get date time only
-        LocalDateTime result = LocalDateTime.parse(dateR);
-
-        System.out.println(result);
+        LocalDateTime date = LocalDateTime.parse(dateR);
         
     	if(!msgR.equals(msg)) {
         	System.out.println("Le message "+msg+" n'existe pas");
         	fail("Le message "+msg+" n'existe pas dans la liste");
         } else {
-        	if(!result.equals(this.dateCreation)) {
+        	if(!date.equals(this.dateCreation.minusHours(1)) && date.isBefore(this.dateCreation.minusHours(1))) {
         		System.out.println("La date de création n'est pas correcte ");
             	fail("La date de création n'est pas correcte");
         	}

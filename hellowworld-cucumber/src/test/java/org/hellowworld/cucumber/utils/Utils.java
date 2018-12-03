@@ -35,13 +35,7 @@ import java.util.Properties;
  */
 public class Utils {
 
-    /**
-     * @return
-     * @throws MalformedURLException
-     
-    public static WebDriver getWebDriver() throws MalformedURLException {
-        return getWebDriver();
-    }*/
+
 
     /**
      * @param browser

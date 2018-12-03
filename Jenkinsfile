@@ -40,65 +40,58 @@ node {
 	       bat "docker cp helloworldrest/target/helloworld.war tomcat:/app"
            sleep 60
 	    }
-        if (params.DEPLOY_DEV) {
-            stage('Deploy DEV') {
-                withEnv(["PATH+ANSIBLE=${tool 'Ansible 2.3.1.0'}"]) {
-                	def version = version(readFile('pom.xml'))
-                	writeFile file: 'extras.json', text: "{'app_version':'${version}'}"
-                    ansiblePlaybook(
-                            playbook: '3rdParty/ansible/playbook.yml',
-                            inventory: '3rdParty/ansible/cap.ini',
-                            credentialsId: "7c964255-1bbc-4256-9afa-fa8215ac9325",
-                            installation: 'Ansible 2.3.1.0',
-                            ansibleName: 'Ansible 2.3.1.0',
-                            extras: '-e "@extras.json"')
-                }
-            }
-        }
-        
-        if (params.DEPLOY_QUAL) {
-            stage('Deploy QUAL') {
-                withEnv(["PATH+ANSIBLE=${tool 'Ansible 2.3.1.0'}"]) {
-                	def version = version(readFile('pom.xml'))
-                	writeFile file: 'extras.json', text: "{'app_version':'${version}'}"
-                    ansiblePlaybook(
-                            playbook: '3rdParty/ansible/playbook.yml',
-                            inventory: '3rdParty/ansible/qual.ini',
-                            credentialsId: "536eb292-6e27-4142-85a6-ea30b82c69d3",
-                            installation: 'Ansible 2.3.1.0',
-                            ansibleName: 'Ansible 2.3.1.0',
-                            extras: '-e "@extras.json"')
-                }
-            }
-        }
-        
-        if (params.UT) {
-	        stage('Unit-Tests') {
-	            withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
-	                bat "mvn org.jacoco:jacoco-maven-plugin:prepare-agent surefire:test"
-	            }
-	            step([
-	                    $class     : 'JUnitResultArchiver',
-	                    testResults: '**/target/surefire-reports/TEST*.xml'
-	            ])
+
+
+        stage('Tests Cucumber') {
+	        parallel 'Firefox': {
+	        	echo 'Firefox'
+	        	stage ('Starting Tests') {
+	        		withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
+				      
+			          bat "mvn surefire:test -Dtest=*IT test -Dbrowser=FIREFOX -DfailIfNoTests=false"
+			        }
+			        step([
+			            	$class: 'CucumberReportPublisher',
+			            	jsonReportDirectory: 'helloworld-cucumber/target/results/JSON',
+			            	fileIncludePattern: 'cucumber.json'
+			        ])
+			        
+				}
+	        	},
+	        	'Chrome': {
+	        		echo 'Chrome'
+	        		stage ('Starting Tests') {
+	        		withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
+				            
+			                bat "mvn surefire:test -Dtest=*IT test -Dbrowser=CHROME -DfailIfNoTests=false"
+			            }
+			            
+			            step([
+			            	$class: 'CucumberReportPublisher',
+			            	jsonReportDirectory: 'helloworld-cucumber/target/results/JSON',
+			            	fileIncludePattern: 'cucumber.json'
+			            ])
+		
+					}
+	        	},
+	        	'IE': {
+	        		echo 'Internet Explorer'
+	        		stage ('Starting Tests') {
+	        		withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
+				            
+			                bat "mvn surefire:test -Dtest=*IT test -Dbrowser=INTERNETEXPLORER -DfailIfNoTests=false"
+			            }
+			            
+			            step([
+			            	$class: 'CucumberReportPublisher',
+			            	jsonReportDirectory: 'helloworld-cucumber/target/results/JSON',
+			            	fileIncludePattern: 'cucumber.json'
+			            ])
+		
+					}
+	        	}
 	        }
-        }
-        if (params.IT) {
-	        stage('Integrations-Tests') {
-	            withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
-	            
-	            	def proxyOrange=""
-				    if(params.ORANGE){
-				       	proxyOrange="-DproxySet=true -DproxyHost=proxy.rd.francetelecom.fr -DproxyPort=3128"
-				    }
-	                bat "mvn org.jacoco:jacoco-maven-plugin:prepare-agent surefire:test -Dtest=*IT test -DfailIfNoTests=false"
-	            }
-	            step([
-	                    $class     : 'JUnitResultArchiver',
-	                    testResults: '**/target/surefire-reports/TEST*.xml'
-	            ])
-	        }
-        }
+       
         
     } catch (any) {
        

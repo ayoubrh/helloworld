@@ -9,3 +9,9 @@ Feature: Test Hello World
     Examples:
     | message   		| 
     | Test A			|
+    | Test B			|
+    | Test C			|
+    | Test D			|
+    | Test E			|
+    | Test F			|
+    | Test G			|
