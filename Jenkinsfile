@@ -48,7 +48,7 @@ node {
 	        	stage ('Starting Tests') {
 	        		withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
 				      
-			          bat "mvn surefire:test -Dtest=*IT test -Dbrowser=FIREFOX -DfailIfNoTests=false"
+			          bat "mvn test -Dtest=*IT -Dbrowser=FIREFOX -DfailIfNoTests=false"
 			        }
 			        step([
 			            	$class: 'CucumberReportPublisher',
@@ -63,7 +63,7 @@ node {
 	        		stage ('Starting Tests') {
 	        		withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
 				            
-			                bat "mvn surefire:test -Dtest=*IT test -Dbrowser=CHROME -DfailIfNoTests=false"
+			                bat "mvn test -Dtest=*IT -Dbrowser=CHROME -DfailIfNoTests=false"
 			            }
 			            
 			            step([
@@ -79,7 +79,7 @@ node {
 	        		stage ('Starting Tests') {
 	        		withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
 				            
-			                bat "mvn surefire:test -Dtest=*IT test -Dbrowser=INTERNETEXPLORER -DfailIfNoTests=false"
+			                bat "mvn test -Dtest=*IT -Dbrowser=INTERNETEXPLORER -DfailIfNoTests=false"
 			            }
 			            
 			            step([
