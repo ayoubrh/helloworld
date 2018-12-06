@@ -8,7 +8,8 @@ import cucumber.api.CucumberOptions;
 @CucumberOptions(
         plugin =  {"pretty", "html:target/results/html","json:target/results/JSON/cucumber.json"},
         features = {"src/test/resources/features"},
-        glue = {""}
+        glue = {""},
+        tags = {"Test"}
 )
 public class AppIT{
 }
