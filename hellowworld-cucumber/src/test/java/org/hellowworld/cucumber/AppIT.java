@@ -9,7 +9,7 @@ import cucumber.api.CucumberOptions;
         plugin =  {"pretty", "html:target/results/html","json:target/results/JSON/cucumber.json"},
         features = {"src/test/resources/features"},
         glue = {""},
-        tags = {"Test"}
+        tags = {"@Test"}
 )
 public class AppIT{
 }
