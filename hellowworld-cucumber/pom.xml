@@ -7,9 +7,9 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>com.kreatik.fr</groupId>
-  <artifactId>hellowworld-cucumber</artifactId>
+  <artifactId>helloworld-cucumber</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>hellowworld-cucumber</name>
+  <name>helloworld-cucumber</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -1,4 +1,4 @@
-package org.hellowworld.cucumber.utils;
+package org.helloworld.cucumber.utils;
 
 /**
  * The {@link Browser} class.

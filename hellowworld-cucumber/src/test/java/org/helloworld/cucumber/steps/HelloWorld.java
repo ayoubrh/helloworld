@@ -1,18 +1,12 @@
-package org.hellowworld.cucumber.steps;
+package org.helloworld.cucumber.steps;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.hellowworld.cucumber.utils.Utils;
+import org.helloworld.cucumber.utils.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

@@ -8,7 +8,7 @@
   <modules>
   	<module>helloworldweb</module>
   	<module>helloworldrest</module>
-    <module>hellowworld-cucumber</module>
+    <module>helloworld-cucumber</module>
   </modules>
   
   <profiles>

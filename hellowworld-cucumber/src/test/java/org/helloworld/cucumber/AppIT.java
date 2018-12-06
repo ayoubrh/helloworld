@@ -1,4 +1,4 @@
-package org.hellowworld.cucumber;
+package org.helloworld.cucumber;
 
 import org.junit.runner.RunWith;
 import cucumber.api.junit.Cucumber;
@@ -8,8 +8,7 @@ import cucumber.api.CucumberOptions;
 @CucumberOptions(
         plugin =  {"pretty", "html:target/results/html","json:target/results/JSON/cucumber.json"},
         features = {"src/test/resources/features"},
-        glue = {""},
-        tags = {"@Test"}
+        glue = {""}
 )
 public class AppIT{
 }
