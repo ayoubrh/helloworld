@@ -7,7 +7,6 @@ package org.hellowworld.cucumber.utils;
  */
 public enum Browser {
 
-
     /** The CHROME. */
     CHROME,
     

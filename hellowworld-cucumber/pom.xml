@@ -125,10 +125,10 @@
 	    	</configuration>
 	    </plugin>
 	    
-	    <!-- <plugin>
+	    <plugin>
 	        <groupId>net.masterthought</groupId>
 	        <artifactId>maven-cucumber-reporting</artifactId>
-	        <version>3.12.0</version>
+	        <version>4.2.3</version>
 	        <executions>
 	          <execution>
 	            <id>execution</id>
@@ -137,20 +137,17 @@
 	              <goal>generate</goal>
 	            </goals>
 	            <configuration>
-	              <projectName>LIVEDOC G2 ${project.version}</projectName>
+	              <projectName>DEMO</projectName>
 	              <outputDirectory>${project.build.directory}/results</outputDirectory>
 	              <cucumberOutput>${project.build.directory}/results/JSON/cucumber.json</cucumberOutput>
 	              <jsonFiles>
                   	<param>${project.build.directory}/results/JSON/cucumber.json</param>
-                  	<param>other.json</param>
                   </jsonFiles>
 	              <skippedFails>true</skippedFails>
-	              <enableFlashCharts>false</enableFlashCharts>
-	              <buildNumber>42</buildNumber>
 	            </configuration>
 	          </execution>
 	        </executions>
-      </plugin> -->
+      </plugin>
    </plugins>
   	
   </build>
