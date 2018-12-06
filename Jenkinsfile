@@ -57,6 +57,22 @@ node {
 			        ])
 			        
 				}
+	        },
+	        	'Chrome': {
+	        		echo 'Chrome'
+	        		stage ('Starting Tests') {
+	        		withMaven(maven: 'M3', mavenOpts: '-Xmx1024M') {
+				            
+			                bat "mvn test -Dtest=*IT -Dbrowser=CHROME -DfailIfNoTests=false"
+			            }
+			            
+			            step([
+			            	$class: 'CucumberReportPublisher',
+			            	jsonReportDirectory: 'helloworld-cucumber/target/results/JSON',
+			            	fileIncludePattern: 'cucumber.json'
+			            ])
+		
+					}
 	        	}
                
 	        	
